@@ -2,7 +2,7 @@
 PS1 Scripting
 
 
-**The run-restart-service-windows PowerShell script used for checking and managing the status of a Windows service. Here's what it does, step by step:**
+# **The run-restart-service-windows PowerShell script used for checking and managing the status of a Windows service. Here's what it does, step by step:**
 
 **Define the Service Name**
 The variable $ServiceName is defined and should be replaced with the actual service name (e.g., InventorySvc).
@@ -36,7 +36,7 @@ Green: Success messages (e.g., service is running or restarted successfully).
 Red: Error or failure messages (e.g., service does not exist or failed to restart).
 
 
-**Here's what windows-running-process-cvs script does, explained in bullet points:**
+# **Here's what windows-running-process-cvs script does, explained in bullet points:**
 
 **Define Output File Path**
 Specifies the file path (C:\Temp\RunningProcesses.csv) where the list of running processes will be exported.
@@ -60,7 +60,7 @@ The -Force parameter ensures the file is overwritten if it already exists.
 Outputs a confirmation message to the console indicating the process list has been exported and specifies the file location.
 
 
-**The windows-find-read-replace-word script performs the following tasks:**
+# **The windows-find-read-replace-word script performs the following tasks:**
 
 **Defines Inputs**
 Specifies the folder path ($folderPath) where the script will look for text files.
