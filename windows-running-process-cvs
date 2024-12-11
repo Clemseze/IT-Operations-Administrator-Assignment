@@ -1,0 +1,15 @@
+# Define the output CSV file path
+$outputFile = "C:\Temp\RunningProcesses.csv"
+
+# Ensure the directory exists
+if (!(Test-Path -Path (Split-Path -Path $outputFile -Parent))) {
+    New-Item -ItemType Directory -Path (Split-Path -Path $outputFile -Parent) -Force
+}
+
+# Retrieve all running processes and export to CSV
+Get-Process |
+Select-Object -Property Name, Id, CPU, WorkingSet, StartTime, ProcessName |
+Export-Csv -Path $outputFile -NoTypeInformation -Force
+
+# Confirm completion
+Write-Host "Process list has been exported to $outputFile"
