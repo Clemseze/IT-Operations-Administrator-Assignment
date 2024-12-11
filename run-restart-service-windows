@@ -1,0 +1,26 @@
+# Define the service name
+$ServiceName = "ServiceNameHere"	# Replace with the actual service name (eg, InventorySvc)
+
+# Get the status of the service
+$Service = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+
+# Check if the service exists
+if ($Service) {
+    # Check if the service is running
+    if ($Service.Status -ne 'Running') {
+        Write-Host "The service '$ServiceName' is not running. Attempting to restart..." -ForegroundColor Yellow
+        
+        try {
+            # Attempt to start the service
+            Start-Service -Name $ServiceName
+            Write-Host "The service '$ServiceName' has been restarted successfully." -ForegroundColor Green
+        } catch {
+            Write-Host "Failed to restart the service '$ServiceName'. Error: $_" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "The service '$ServiceName' is already running." -ForegroundColor Green
+    }
+} else {
+    Write-Host "The service '$ServiceName' does not exist. Please confirm the service name." -ForegroundColor Red
+}
+
