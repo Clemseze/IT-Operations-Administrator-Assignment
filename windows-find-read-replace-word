@@ -1,0 +1,49 @@
+# Define the folder path, the word to find, and the replacement word
+$folderPath = "C:\Users\Administrator\Documents"
+$wordToFind = "OldWord"		# Word to be replaced
+$replacementWord = "NewWord"		# Replacement word
+
+# Create a list to hold modified file names
+$modifiedFiles = @()
+
+# Wrap the operation in a Try-Catch block to handle any unexpected errors
+Try {
+    Write-Host "Searching for files in folder: $folderPath" -ForegroundColor Cyan
+
+    # Get all text files in the specified folder
+    $files = Get-ChildItem -Path $folderPath -Recurse -Filter *.txt
+
+    if ($files.Count -eq 0) {
+        Write-Host "No text files found in the specified folder." -ForegroundColor Yellow
+    } else {
+        Write-Host "Processing files..." -ForegroundColor Cyan
+
+        $files | ForEach-Object {
+            # Read the content of the file
+            $content = Get-Content $_.FullName
+            
+            # Check if the file contains the word to find
+            if ($content -match $wordToFind) {
+                # Replace the word and save the content back to the file
+                $newContent = $content -replace [regex]::Escape($wordToFind), $replacementWord
+                
+                # Output the modified content to the same file
+                Set-Content -Path $_.FullName -Value $newContent
+                
+                # Add the modified file to the list
+                $modifiedFiles += $_.FullName
+                Write-Host "Modified file: $($_.FullName)" -ForegroundColor Green
+            }
+        }
+
+        # Output the list of modified files
+        if ($modifiedFiles.Count -eq 0) {
+            Write-Host "No files were modified." -ForegroundColor Yellow
+        } else {
+            Write-Host "The following files were modified:" -ForegroundColor Green
+            $modifiedFiles | ForEach-Object { Write-Host $_ -ForegroundColor White }
+        }
+    }
+} Catch {
+    Write-Host "An error occurred: $($_.Exception.Message)" -ForegroundColor Red
+}
